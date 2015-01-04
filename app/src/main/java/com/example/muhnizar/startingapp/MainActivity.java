@@ -7,7 +7,9 @@ import android.support.v4.app.FragmentTransaction;
 
 
 public class MainActivity extends FragmentActivity
-        implements HeadlinesFragment.OnHeadlineSelectedListener {
+        implements ListTutorialFragment.OnHeadlineSelectedListener {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +28,7 @@ public class MainActivity extends FragmentActivity
             }
 
             // Create a new Fragment to be placed in the activity layout
-            HeadlinesFragment firstFragment = new HeadlinesFragment();
+            ListTutorialFragment firstFragment = new ListTutorialFragment();
 
             // In case this activity was started with special instructions from an
             // Intent, pass the Intent's extras to the fragment as arguments
@@ -34,32 +36,30 @@ public class MainActivity extends FragmentActivity
 
             // Add the fragment to the 'fragment_container' FrameLayout
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, firstFragment).commit();
-
-
         }
     }
 
 
     public void onArticleSelected(int position) {
-        // The user selected the headline of an article from the HeadlinesFragment
+        // The user selected the headline of an article from the ListTutorialFragment
 
         // Capture the article fragment from the activity layout
-        ArticleFragment articleFrag = (ArticleFragment)
+        TutorialFragment articleFrag = (TutorialFragment)
                 getSupportFragmentManager().findFragmentById(R.id.article_fragment);
 
         if (articleFrag != null) {
             // If article frag is available, we're in two-pane layout...
 
-            // Call a method in the ArticleFragment to update its content
+            // Call a method in the TutorialFragment to update its content
             articleFrag.updateArticleView(position);
 
         } else {
             // If the frag is not available, we're in the one-pane layout and must swap frags...
 
             // Create fragment and give it an argument for the selected article
-            ArticleFragment newFragment = new ArticleFragment();
+            TutorialFragment newFragment = new TutorialFragment();
             Bundle args = new Bundle();
-            args.putInt(ArticleFragment.ARG_POSITION, position);
+            args.putInt(TutorialFragment.ARG_POSITION, position);
             newFragment.setArguments(args);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
